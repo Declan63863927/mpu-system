@@ -17,7 +17,7 @@ import {
 // 模拟数据 (Mock Data) - 增加了课程详情描述
 // ----------------------------------------------------------------------
 const INITIAL_COURSES = [
-  { id: 'COMP2116', name: '软件工程 (Software Engineering)', credits: 3, teacher: 'Dr. Kim', day: '周二', time: '14:30-17:30', capacity: 40, enrolled: 38, type: '专业必修 (Major Core)', preReq: 'COMP1001 计算机科学导论', description: '本课程重点介绍软件开发的生命周期、敏捷开发模型(Agile)、UML系统建模以及软件测试原则。学生将以小组形式完成一个完整的全栈项目原型。' },
+  { id: 'COMP2116', name: '软件工程', credits: 3, teacher: 'Dr. Kim', day: '周二', time: '14:30-17:30', capacity: 40, enrolled: 38, type: '专业必修 (Major Core)', preReq: 'COMP1001 计算机科学导论', description: '本课程重点介绍软件开发的生命周期、敏捷开发模型(Agile)、UML系统建模以及软件测试原则。学生将以小组形式完成一个完整的全栈项目原型。' },
   { id: 'COMP2011', name: '数据结构与算法', credits: 4, teacher: 'Dr. Wong', day: '周一', time: '10:00-12:00', capacity: 50, enrolled: 50, type: '专业必修 (Major Core)', preReq: 'COMP1001 计算机科学导论', description: '深入研究各种数据结构（如树、图、哈希表）以及基础算法设计（贪心、动态规划、分治法），强调时空复杂度分析。' },
   { id: 'MATH1010', name: '离散数学', credits: 3, teacher: 'Dr. Chan', day: '周四', time: '09:00-12:00', capacity: 60, enrolled: 45, type: '通识必修 (General Core)', preReq: '无 (None)', description: '涵盖集合论、图论、逻辑推理和组合数学，为计算机科学的算法设计提供坚实的数学基础支撑。' },
   { id: 'LANG1002', name: '大学英语 II', credits: 2, teacher: 'Prof. Smith', day: '周三', time: '14:00-16:00', capacity: 30, enrolled: 20, type: '语言选修 (Language Elective)', preReq: 'LANG1001 大学英语 I', description: '提升学术英语阅读与写作能力，重点训练科技论文的文献综述与专业术语表达。' },
