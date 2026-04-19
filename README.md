@@ -1,7 +1,8 @@
 # 🎓 MPU Course Management System
 **COMP2116: Software Engineering - Final Project**
 
-> A modern, AI-integrated academic management prototype designed specifically for the Macao Polytechnic University (MPU) community.
+![Graphical Abstract](./abstract.png) 
+> **Graphical Abstract Description**: A modern, rule-based academic management prototype designed specifically for the Macao Polytechnic University (MPU) community.
 
 ---
 
@@ -13,21 +14,20 @@ This project delivers an intuitive and streamlined course registration portal fo
 ### ⚙️ Development Methodology
 We adopted the **Agile Development** model to manage this project.
 
-* **Rapid Iteration**: Unlike the Waterfall model, Agile allows for continuous adjustments based on testing.
-* **AI Optimization**: Because we integrated experimental features like the Gemini API, Agile enabled us to refine UI interactions and optimize AI prompts iteratively, ensuring the software meets rigorous academic expectations.
+* **Rapid Iteration**: Unlike the Waterfall model, Agile allows for continuous adjustments based on testing. It enabled us to rapidly refine UI interactions, optimize our state management, and ensure the software's validation rules meet rigorous academic expectations.
 
 ---
 
 ## 🎯 2. Features & Implementation
 
 ### ✨ Key Features
-* ✅ **Intelligent Registration**: Real-time course validation and credit calculation.
-* ✅ **AI Advisor**: Personalized course recommendations based on student background.
+* ✅ **Intelligent Registration**: Real-time course validation, capacity checking, and conflict resolution.
+* ✅ **Dynamic Dashboard**: Auto-calculation of student GPAs and acquired credits based on historical records.
 * ✅ **Secure Access**: Route protection and identity verification via a dedicated Authentication Module.
 * ✅ **Modern UI**: Responsive design built with Tailwind CSS for high usability.
 
 ### 🧠 Core Algorithm
-The system utilizes a **Context-Aware AI Recommendation Algorithm**. It aggregates structured data—including major background, historical grades, and current availability—and leverages the Gemini LLM for intelligent logical reasoning to generate tailored academic pathways.
+The system utilizes a **Rule-Based Validation Algorithm**. It aggregates structured data—including maximum credit limits, historical grades, and real-time course capacity—to strictly enforce academic policies (e.g., intercepting over-credit enrollment and full-class registrations) through synchronous logical reasoning.
 
 ---
 
@@ -36,22 +36,22 @@ The system utilizes a **Context-Aware AI Recommendation Algorithm**. It aggregat
 ### 🔄 Sprint History
 * **Sprint 1**: Requirement analysis and high-fidelity UI prototyping.
 * **Sprint 2**: Development of core business logic (registration validation, credit logic).
-* **Sprint 3**: AI API integration and comprehensive functional testing.
+* **Sprint 3**: Comprehensive functional testing and UI refinement.
 * **Sprint 4**: Implementation of the secure Authentication Module and route protection.
 
 ### 👥 Members & Roles
 | Name | Student ID | Roles & Responsibilities | Contribution |
 | :--- | :--- | :--- | :--- |
-| **Xu Rui** | p2421552 | Project Manager, Front-end Developer, AI Integration | 35% |
+| **Xu Rui** | p2421552 | Project Manager, Front-end Developer, Core Logic | 35% |
 | **Sun Donghao** | p2421132 | Back-end Developer, Database Administration | 35% |
 | **Xu Zhengchi** | p2421336 | Front-end Developer, UI Design | 10% |
 | **Wang Jingqi** | p2421584 | Back-end Developer, Database Administration | 10% |
-| **Zhang Junwei** | p2214320 | Front-end Developer, UI Design | 10% |
+| **Zhang Junwei** | p2421135 | Front-end Developer, UI Design | 10% |
 
 ### 🕒 Milestones
 * **April 14, 2026**: Environment setup and foundational framework.
 * **April 16, 2026**: Completion of registration logic and styling.
-* **April 18, 2026**: AI advisor integration and GitHub deployment.
+* **April 18, 2026**: Core feature stabilization and GitHub deployment.
 
 ---
 
@@ -60,7 +60,7 @@ The system utilizes a **Context-Aware AI Recommendation Algorithm**. It aggregat
 ### 💻 Frameworks & Tools
 * **Languages**: JavaScript (ES6+), HTML5, CSS3
 * **Frameworks**: React.js, Tailwind CSS (v3)
-* **Libraries**: Lucide-React, Gemini API
+* **Libraries**: Lucide-React
 
 ### ⚙️ System Requirements
 | Type | Requirement |
@@ -88,7 +88,7 @@ The system utilizes a **Context-Aware AI Recommendation Algorithm**. It aggregat
 ---
 
 ## 📜 7. Declaration
-This project was developed using React and Vite. AI features are powered by the Google Gemini API. All business logic codes were originally developed by the project team.
+This project was developed using React and Vite. UI styling utilizes the open-source Tailwind CSS framework. All business logic codes and validation algorithms were originally developed by the project team.
 
 ---
 **Authors**: MPU COMP2116 Team | **Last Updated**: April 2026

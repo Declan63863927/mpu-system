@@ -6,10 +6,7 @@ import {
   LogOut, 
   User, 
   CheckCircle2, 
-  XCircle,
   AlertCircle,
-  Sparkles,
-  Loader2,
   Lock
 } from 'lucide-react';
 
@@ -44,9 +41,6 @@ export default function CourseManagementSystem() {
   const [availableCourses, setAvailableCourses] = useState(INITIAL_COURSES); 
   const [myCourses, setMyCourses] = useState([]); 
   const [notification, setNotification] = useState(null); 
-  const [aiRecommendation, setAiRecommendation] = useState(''); 
-  const [isAiLoading, setIsAiLoading] = useState(false); 
-  const [showAiModal, setShowAiModal] = useState(false); 
 
   // 学生信息
   const studentInfo = {
@@ -74,7 +68,7 @@ export default function CourseManagementSystem() {
     setActiveTab('dashboard');
   };
 
-  // --- 其他系统逻辑 ---
+  // --- 核心业务逻辑 (选退课及规则校验) ---
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 3000);
@@ -103,42 +97,6 @@ export default function CourseManagementSystem() {
       c.id === courseId ? { ...c, enrolled: c.enrolled - 1 } : c
     ));
     showNotification(`已退选 ${courseToDrop.name}`);
-  };
-
-  const generateAIRecommendation = async () => {
-    setShowAiModal(true);
-    setIsAiLoading(true);
-    setAiRecommendation('');
-
-    const apiKey = ""; // 实际项目中请使用环境变量
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-    const prompt = `
-      你是澳门理工大学 (MPU) 的资深学术导师。请根据以下学生信息，为他推荐本学期最应该选修的 1 到 2 门课程。
-      姓名: ${studentInfo.name}, 专业: ${studentInfo.major}
-      当前已获总学分: ${INITIAL_GRADES.reduce((sum, c) => sum + c.credits, 0)}
-      【历史成绩】
-      ${INITIAL_GRADES.map(g => `- ${g.name} (${g.credits}学分): ${g.score}分, 等第 ${g.grade}`).join('\n')}
-      【当前可选课程库】
-      ${availableCourses.filter(c => !myCourses.some(mc => mc.id === c.id)).map(c => `- ${c.name} (${c.id}, ${c.credits}学分, 余量: ${c.capacity - c.enrolled})`).join('\n')}
-      要求：语气专业鼓励，结合专业背景分析，提醒学分上限，纯文本换行排版。
-    `;
-
-    const payload = { contents: [{ parts: [{ text: prompt }] }] };
-
-    try {
-      const result = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const data = await result.json();
-      setAiRecommendation(data.candidates?.[0]?.content?.parts?.[0]?.text || "抱歉，AI 导师暂时无法提供建议。");
-    } catch (error) {
-      setAiRecommendation("请求失败，请检查网络或 API 配置后重试。");
-    } finally {
-      setIsAiLoading(false);
-    }
   };
 
   // --- 数据计算 ---
@@ -237,9 +195,6 @@ export default function CourseManagementSystem() {
       <div className="flex justify-between items-center border-b pb-2 border-emerald-200">
         <h2 className="text-2xl font-bold text-gray-800">2026年 秋季学期选课</h2>
         <div className="flex items-center space-x-4">
-          <button onClick={generateAIRecommendation} className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md transition-all transform hover:scale-105">
-            <Sparkles size={16} /><span>✨ 咨询 AI 学术导师</span>
-          </button>
           <div className="text-sm text-gray-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
             已选: <span className="font-bold text-emerald-600">{currentTermCredits}</span> / {studentInfo.maxCredits} 学分
           </div>
@@ -285,7 +240,7 @@ export default function CourseManagementSystem() {
     </div>
   );
 
-  // 3. 成绩查询视图 (完美回归)
+  // 3. 成绩查询视图
   const renderGrades = () => (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <h2 className="text-2xl font-bold text-gray-800 border-b pb-2 border-emerald-200">历史成绩单</h2>
@@ -339,7 +294,6 @@ export default function CourseManagementSystem() {
         <nav className="flex-1 px-4 py-6 space-y-2">
           <button onClick={() => setActiveTab('dashboard')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'dashboard' ? 'bg-emerald-700 text-white shadow-md' : 'hover:bg-emerald-800 text-emerald-200'}`}><LayoutDashboard size={20} /><span>仪表盘</span></button>
           <button onClick={() => setActiveTab('courseSelection')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'courseSelection' ? 'bg-emerald-700 text-white shadow-md' : 'hover:bg-emerald-800 text-emerald-200'}`}><BookOpen size={20} /><span>选课中心</span></button>
-          {/* 这里恢复了成绩查询的侧边栏按钮 */}
           <button onClick={() => setActiveTab('grades')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'grades' ? 'bg-emerald-700 text-white shadow-md' : 'hover:bg-emerald-800 text-emerald-200'}`}><GraduationCap size={20} /><span>成绩查询</span></button>
         </nav>
 
@@ -362,19 +316,9 @@ export default function CourseManagementSystem() {
           <div className="max-w-6xl mx-auto">
             {activeTab === 'dashboard' && renderDashboard()}
             {activeTab === 'courseSelection' && renderCourseSelection()}
-            {/* 这里恢复了成绩查询页面的渲染逻辑 */}
             {activeTab === 'grades' && renderGrades()}
           </div>
         </div>
-
-        {showAiModal && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[80vh]">
-              <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white flex justify-between items-center"><h3 className="text-xl font-bold flex items-center"><Sparkles className="mr-2" /> AI 学术导师建议</h3><button onClick={() => setShowAiModal(false)} className="text-white/80 hover:text-white"><XCircle size={24} /></button></div>
-              <div className="p-6 overflow-y-auto flex-1">{isAiLoading ? (<div className="flex flex-col items-center justify-center py-12"><Loader2 className="w-12 h-12 text-purple-600 animate-spin" /><p>AI 正在分析...</p></div>) : (<div className="prose prose-purple max-w-none text-gray-700">{aiRecommendation.split('\n').map((line, i) => <p key={i}>{line.replace(/\*\*/g, '')}</p>)}</div>)}</div>
-            </div>
-          </div>
-        )}
       </main>
     </div>
   );
