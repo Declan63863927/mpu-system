@@ -23,9 +23,9 @@ We adopted the **Agile Development** model to manage this project.
 ### ✨ Key Features
 * ✅ **Intelligent Registration**: Real-time course validation, capacity checking, and conflict resolution.
 * ✅ **Dynamic Dashboard**: Auto-calculation of student GPAs and acquired credits based on historical records.
-* ✅ **Visual Timetable (New!)**: An interactive weekly schedule view that automatically maps and organizes enrolled courses into a responsive grid.
+* ✅ **Visual Timetable**: An interactive weekly schedule view that automatically maps and organizes enrolled courses into a responsive grid.
 * ✅ **Detailed Course Syllabus**: Interactive modal windows providing in-depth course descriptions, prerequisites, and instructor details.
-* ✅ **Secure Access**: Route protection and identity verification via a dedicated Authentication Module.
+* ✅ **User Authentication System (New!)**: Comprehensive Login and Registration (Sign Up) workflows with frontend state-based mock database and strict form validation.
 
 ### 🧠 Core Algorithm
 The system utilizes a **Rule-Based Validation Algorithm**. It aggregates structured data—including maximum credit limits, historical grades, and real-time course capacity—to strictly enforce academic policies (e.g., intercepting over-credit enrollment and full-class registrations) through synchronous logical reasoning.
@@ -39,7 +39,8 @@ The system utilizes a **Rule-Based Validation Algorithm**. It aggregates structu
 * **Sprint 2**: Development of core business logic (registration validation, credit logic).
 * **Sprint 3**: Comprehensive functional testing and UI refinement.
 * **Sprint 4**: Implementation of the secure Authentication Module and route protection.
-* **Sprint 5**: Developed the visual Timetable Grid and detailed Syllabus Modals to enhance UI/UX completeness.
+* **Sprint 5**: Developed the visual Timetable Grid and detailed Syllabus Modals.
+* **Sprint 6**: Added full User Registration logic (mock database) with dynamic state management and form validations.
 
 ### 👥 Members & Roles
 | Name | Student ID | Roles & Responsibilities | Contribution |
@@ -53,7 +54,7 @@ The system utilizes a **Rule-Based Validation Algorithm**. It aggregates structu
 ### 🕒 Milestones
 * **April 14, 2026**: Environment setup and foundational framework.
 * **April 16, 2026**: Completion of registration logic and styling.
-* **April 18, 2026**: Core feature stabilization and GitHub deployment.
+* **April 19, 2026**: Added registration systems, visual enhancements, and finalized GitHub deployment.
 
 ---
 
