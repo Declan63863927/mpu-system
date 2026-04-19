@@ -60,7 +60,6 @@ export default function CourseManagementSystem() {
   // --- 登录逻辑 ---
   const handleLogin = (e) => {
     e.preventDefault();
-    // 模拟后端账号密码校验 (测试账号: P2100000, 密码: 123456)
     if (loginForm.username === 'P2100000' && loginForm.password === '123456') {
       setIsLoggedIn(true);
       setLoginError('');
@@ -81,7 +80,6 @@ export default function CourseManagementSystem() {
     setTimeout(() => setNotification(null), 3000);
   };
 
-  // 选课逻辑
   const handleEnroll = (course) => {
     if (myCourses.some(c => c.id === course.id)) return showNotification('您已选择该课程！', 'error');
     if (course.enrolled >= course.capacity) return showNotification('该课程选课人数已满！', 'error');
@@ -98,7 +96,6 @@ export default function CourseManagementSystem() {
     showNotification(`成功选修 ${course.name}`);
   };
 
-  // 退课逻辑
   const handleDrop = (courseId) => {
     const courseToDrop = myCourses.find(c => c.id === courseId);
     setMyCourses(myCourses.filter(c => c.id !== courseId));
@@ -108,14 +105,12 @@ export default function CourseManagementSystem() {
     showNotification(`已退选 ${courseToDrop.name}`);
   };
 
-  // AI 智能选课顾问逻辑 (Gemini API Integration)
   const generateAIRecommendation = async () => {
     setShowAiModal(true);
     setIsAiLoading(true);
     setAiRecommendation('');
 
-    // 注意：实际项目中请将 API Key 放在 .env 文件中
-    const apiKey = ""; 
+    const apiKey = ""; // 实际项目中请使用环境变量
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
     const prompt = `
@@ -126,7 +121,6 @@ export default function CourseManagementSystem() {
       ${INITIAL_GRADES.map(g => `- ${g.name} (${g.credits}学分): ${g.score}分, 等第 ${g.grade}`).join('\n')}
       【当前可选课程库】
       ${availableCourses.filter(c => !myCourses.some(mc => mc.id === c.id)).map(c => `- ${c.name} (${c.id}, ${c.credits}学分, 余量: ${c.capacity - c.enrolled})`).join('\n')}
-
       要求：语气专业鼓励，结合专业背景分析，提醒学分上限，纯文本换行排版。
     `;
 
@@ -169,7 +163,6 @@ export default function CourseManagementSystem() {
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-emerald-900 flex items-center justify-center p-4 font-sans relative overflow-hidden">
-        {/* 背景装饰 */}
         <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-emerald-500 rounded-full blur-3xl"></div>
           <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
@@ -192,49 +185,22 @@ export default function CourseManagementSystem() {
                   {loginError}
                 </div>
               )}
-              
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">学号 (Student ID)</label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="text-gray-400" size={18} />
-                  </div>
-                  <input 
-                    type="text" 
-                    required
-                    className="pl-10 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
-                    placeholder="请输入测试学号: P2100000"
-                    value={loginForm.username}
-                    onChange={(e) => setLoginForm({...loginForm, username: e.target.value})}
-                  />
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><User className="text-gray-400" size={18} /></div>
+                  <input type="text" required className="pl-10 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="请输入测试学号: P2100000" value={loginForm.username} onChange={(e) => setLoginForm({...loginForm, username: e.target.value})} />
                 </div>
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">密码 (Password)</label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="text-gray-400" size={18} />
-                  </div>
-                  <input 
-                    type="password" 
-                    required
-                    className="pl-10 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all"
-                    placeholder="请输入测试密码: 123456"
-                    value={loginForm.password}
-                    onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
-                  />
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Lock className="text-gray-400" size={18} /></div>
+                  <input type="password" required className="pl-10 w-full p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="请输入测试密码: 123456" value={loginForm.password} onChange={(e) => setLoginForm({...loginForm, password: e.target.value})} />
                 </div>
               </div>
-
-              <button 
-                type="submit" 
-                className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition-colors flex justify-center items-center"
-              >
-                登 录 (Sign In)
-              </button>
+              <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition-colors">登 录 (Sign In)</button>
             </form>
-            
             <div className="mt-6 text-center text-sm text-gray-500">
               <p>测试账号: P2100000 | 密码: 123456</p>
             </div>
@@ -248,23 +214,11 @@ export default function CourseManagementSystem() {
   const renderDashboard = () => (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <h2 className="text-2xl font-bold text-gray-800 border-b pb-2 border-emerald-200">欢迎回来, {studentInfo.name}</h2>
-      {/* 概览卡片 */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-emerald-100 flex items-center space-x-4">
-          <div className="p-3 bg-emerald-100 text-emerald-600 rounded-lg"><GraduationCap size={24} /></div>
-          <div><p className="text-sm text-gray-500">当前平均绩点 (GPA)</p><p className="text-2xl font-bold text-gray-800">{gpa}</p></div>
-        </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-emerald-100 flex items-center space-x-4">
-          <div className="p-3 bg-blue-100 text-blue-600 rounded-lg"><BookOpen size={24} /></div>
-          <div><p className="text-sm text-gray-500">已获总学分</p><p className="text-2xl font-bold text-gray-800">{totalCredits}</p></div>
-        </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-emerald-100 flex items-center space-x-4">
-          <div className="p-3 bg-purple-100 text-purple-600 rounded-lg"><LayoutDashboard size={24} /></div>
-          <div><p className="text-sm text-gray-500">本学期已选学分</p><p className="text-2xl font-bold text-gray-800">{currentTermCredits} / {studentInfo.maxCredits}</p></div>
-        </div>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-emerald-100 flex items-center space-x-4"><div className="p-3 bg-emerald-100 text-emerald-600 rounded-lg"><GraduationCap size={24} /></div><div><p className="text-sm text-gray-500">当前平均绩点 (GPA)</p><p className="text-2xl font-bold text-gray-800">{gpa}</p></div></div>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-emerald-100 flex items-center space-x-4"><div className="p-3 bg-blue-100 text-blue-600 rounded-lg"><BookOpen size={24} /></div><div><p className="text-sm text-gray-500">已获总学分</p><p className="text-2xl font-bold text-gray-800">{totalCredits}</p></div></div>
+        <div className="bg-white p-6 rounded-xl shadow-sm border border-emerald-100 flex items-center space-x-4"><div className="p-3 bg-purple-100 text-purple-600 rounded-lg"><LayoutDashboard size={24} /></div><div><p className="text-sm text-gray-500">本学期已选学分</p><p className="text-2xl font-bold text-gray-800">{currentTermCredits} / {studentInfo.maxCredits}</p></div></div>
       </div>
-
-      {/* 学生信息卡片 */}
       <div className="bg-white p-6 rounded-xl shadow-sm border border-emerald-100">
         <h3 className="text-lg font-semibold text-gray-800 mb-4">学籍信息</h3>
         <div className="grid grid-cols-2 gap-4">
@@ -277,7 +231,7 @@ export default function CourseManagementSystem() {
     </div>
   );
 
-  // 2. 选课中心视图 (简略保留)
+  // 2. 选课中心视图
   const renderCourseSelection = () => (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex justify-between items-center border-b pb-2 border-emerald-200">
@@ -292,32 +246,36 @@ export default function CourseManagementSystem() {
         </div>
       </div>
 
-      {/* 可选课程列表 */}
+      {myCourses.length > 0 && (
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center"><CheckCircle2 className="mr-2 text-emerald-500" size={20}/> 我的已选课程</h3>
+          <div className="overflow-x-auto bg-white rounded-xl shadow-sm border border-emerald-100">
+            <table className="w-full text-left border-collapse">
+              <thead><tr className="bg-emerald-50/50 text-emerald-800 border-b border-emerald-100"><th className="p-4">课程代码</th><th className="p-4">课程名称</th><th className="p-4">学分</th><th className="p-4">上课时间</th><th className="p-4 text-center">操作</th></tr></thead>
+              <tbody>
+                {myCourses.map(course => (
+                  <tr key={`my-${course.id}`} className="border-b border-gray-50 hover:bg-gray-50"><td className="p-4 font-medium">{course.id}</td><td className="p-4">{course.name}</td><td className="p-4">{course.credits}</td><td className="p-4 text-sm text-gray-600">{course.schedule}</td><td className="p-4 text-center"><button onClick={() => handleDrop(course.id)} className="text-red-500 hover:text-red-700 font-medium">退选</button></td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       <div>
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">全校可选课程</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {availableCourses.map(course => {
             const isEnrolled = myCourses.some(c => c.id === course.id);
             const isFull = course.enrolled >= course.capacity;
             return (
               <div key={course.id} className={`bg-white rounded-xl shadow-sm border p-5 flex flex-col ${isEnrolled ? 'border-emerald-500 ring-1 ring-emerald-500' : 'border-gray-200 hover:border-emerald-300'} transition-all`}>
-                <div className="flex justify-between items-start mb-2">
-                  <span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded font-mono">{course.id}</span>
-                  <span className="text-sm font-semibold text-emerald-600">{course.credits} 学分</span>
-                </div>
+                <div className="flex justify-between items-start mb-2"><span className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded font-mono">{course.id}</span><span className="text-sm font-semibold text-emerald-600">{course.credits} 学分</span></div>
                 <h4 className="font-bold text-lg text-gray-800 mb-1">{course.name}</h4>
                 <p className="text-sm text-gray-500 mb-4 flex-grow">👨‍🏫 {course.teacher} <br/> 🕒 {course.schedule}</p>
-                
                 <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100">
-                  <span className={`text-xs ${isFull ? 'text-red-500 font-bold' : 'text-gray-500'}`}>
-                    余量: {course.capacity - course.enrolled} / {course.capacity}
-                  </span>
-                  {isEnrolled ? (
-                    <button onClick={() => handleDrop(course.id)} className="text-red-500 font-medium text-sm">退选</button>
-                  ) : isFull ? (
-                    <span className="text-red-400 font-medium text-sm">已满</span>
-                  ) : (
-                    <button onClick={() => handleEnroll(course)} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium">选修</button>
-                  )}
+                  <span className={`text-xs ${isFull ? 'text-red-500 font-bold' : 'text-gray-500'}`}>余量: {course.capacity - course.enrolled} / {course.capacity}</span>
+                  {isEnrolled ? (<span className="text-emerald-500 font-medium text-sm flex items-center"><CheckCircle2 size={16} className="mr-1" /> 已选</span>) : isFull ? (<span className="text-red-400 font-medium text-sm">已满</span>) : (<button onClick={() => handleEnroll(course)} className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium">选修</button>)}
                 </div>
               </div>
             );
@@ -327,69 +285,93 @@ export default function CourseManagementSystem() {
     </div>
   );
 
-  // 主渲染入口 (已登录状态)
+  // 3. 成绩查询视图 (完美回归)
+  const renderGrades = () => (
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <h2 className="text-2xl font-bold text-gray-800 border-b pb-2 border-emerald-200">历史成绩单</h2>
+      <div className="bg-white rounded-xl shadow-sm border border-emerald-100 overflow-hidden">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-emerald-600 text-white">
+              <th className="p-4 font-semibold">课程代码</th>
+              <th className="p-4 font-semibold">课程名称</th>
+              <th className="p-4 font-semibold text-center">学分</th>
+              <th className="p-4 font-semibold text-center">最终得分</th>
+              <th className="p-4 font-semibold text-center">等第 (Grade)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {INITIAL_GRADES.map((grade, index) => (
+              <tr key={index} className="border-b border-gray-100 hover:bg-emerald-50/30 transition-colors">
+                <td className="p-4 font-medium text-gray-600">{grade.id}</td>
+                <td className="p-4 text-gray-800">{grade.name}</td>
+                <td className="p-4 text-center text-gray-600">{grade.credits}</td>
+                <td className="p-4 text-center font-bold text-gray-700">{grade.score}</td>
+                <td className="p-4 text-center">
+                  <span className={`px-3 py-1 rounded-full text-sm font-bold ${
+                    grade.grade.startsWith('A') ? 'bg-green-100 text-green-700' :
+                    grade.grade.startsWith('B') ? 'bg-blue-100 text-blue-700' :
+                    'bg-yellow-100 text-yellow-700'
+                  }`}>
+                    {grade.grade}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-sm text-gray-500 text-center mt-4">
+        * 注：此处仅显示已归档的正式成绩。本学期在修课程成绩将在期末考试后公布。
+      </p>
+    </div>
+  );
+
+  // 主渲染入口
   return (
     <div className="min-h-screen bg-[#f8fafc] flex font-sans">
-      {/* 侧边导航栏 */}
       <aside className="w-64 bg-emerald-900 text-emerald-50 flex flex-col shadow-xl z-10">
         <div className="p-6 text-center border-b border-emerald-800">
-          <div className="w-16 h-16 bg-white rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg">
-            <span className="text-emerald-900 font-black text-2xl">MPU</span>
-          </div>
+          <div className="w-16 h-16 bg-white rounded-full mx-auto mb-3 flex items-center justify-center shadow-lg"><span className="text-emerald-900 font-black text-2xl">MPU</span></div>
           <h1 className="font-bold text-lg tracking-wide">教务管理系统</h1>
         </div>
         
         <nav className="flex-1 px-4 py-6 space-y-2">
           <button onClick={() => setActiveTab('dashboard')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'dashboard' ? 'bg-emerald-700 text-white shadow-md' : 'hover:bg-emerald-800 text-emerald-200'}`}><LayoutDashboard size={20} /><span>仪表盘</span></button>
           <button onClick={() => setActiveTab('courseSelection')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'courseSelection' ? 'bg-emerald-700 text-white shadow-md' : 'hover:bg-emerald-800 text-emerald-200'}`}><BookOpen size={20} /><span>选课中心</span></button>
+          {/* 这里恢复了成绩查询的侧边栏按钮 */}
+          <button onClick={() => setActiveTab('grades')} className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'grades' ? 'bg-emerald-700 text-white shadow-md' : 'hover:bg-emerald-800 text-emerald-200'}`}><GraduationCap size={20} /><span>成绩查询</span></button>
         </nav>
 
         <div className="p-4 border-t border-emerald-800">
-          <button onClick={handleLogout} className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-emerald-800 hover:text-red-400 text-emerald-200 transition-all">
-            <LogOut size={20} />
-            <span>退出登录 (Logout)</span>
-          </button>
+          <button onClick={handleLogout} className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl hover:bg-emerald-800 hover:text-red-400 text-emerald-200 transition-all"><LogOut size={20} /><span>退出登录 (Logout)</span></button>
         </div>
       </aside>
 
-      {/* 主内容区 */}
       <main className="flex-1 flex flex-col relative overflow-hidden">
         <header className="bg-white shadow-sm border-b border-gray-200 py-4 px-8 flex justify-between items-center z-10">
           <div className="text-gray-500 font-medium">2025-2026 学年 秋季学期</div>
-          <div className="flex items-center space-x-3">
-            <span className="text-sm font-medium text-gray-700">{studentInfo.name}</span>
-            <div className="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center"><User size={16} /></div>
-          </div>
+          <div className="flex items-center space-x-3"><span className="text-sm font-medium text-gray-700">{studentInfo.name}</span><div className="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center"><User size={16} /></div></div>
         </header>
 
         {notification && (
-          <div className={`absolute top-20 right-8 px-6 py-4 rounded-xl shadow-xl z-50 flex items-center animate-in slide-in-from-top-4 fade-in ${notification.type === 'error' ? 'bg-red-50 text-red-700 border-l-4 border-red-500' : 'bg-emerald-50 text-emerald-800 border-l-4 border-emerald-500'}`}>
-            <span className="font-medium">{notification.message}</span>
-          </div>
+          <div className={`absolute top-20 right-8 px-6 py-4 rounded-xl shadow-xl z-50 flex items-center animate-in slide-in-from-top-4 fade-in ${notification.type === 'error' ? 'bg-red-50 text-red-700 border-l-4 border-red-500' : 'bg-emerald-50 text-emerald-800 border-l-4 border-emerald-500'}`}><span className="font-medium">{notification.message}</span></div>
         )}
 
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="max-w-6xl mx-auto">
             {activeTab === 'dashboard' && renderDashboard()}
             {activeTab === 'courseSelection' && renderCourseSelection()}
+            {/* 这里恢复了成绩查询页面的渲染逻辑 */}
+            {activeTab === 'grades' && renderGrades()}
           </div>
         </div>
 
-        {/* AI 弹窗 */}
         {showAiModal && (
           <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[80vh]">
-              <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white flex justify-between items-center">
-                <h3 className="text-xl font-bold flex items-center"><Sparkles className="mr-2" /> AI 学术导师建议</h3>
-                <button onClick={() => setShowAiModal(false)} className="text-white/80 hover:text-white"><XCircle size={24} /></button>
-              </div>
-              <div className="p-6 overflow-y-auto flex-1">
-                {isAiLoading ? (
-                   <div className="flex flex-col items-center justify-center py-12"><Loader2 className="w-12 h-12 text-purple-600 animate-spin" /><p>AI 正在分析...</p></div>
-                ) : (
-                  <div className="prose prose-purple max-w-none text-gray-700">{aiRecommendation.split('\n').map((line, i) => <p key={i}>{line.replace(/\*\*/g, '')}</p>)}</div>
-                )}
-              </div>
+              <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white flex justify-between items-center"><h3 className="text-xl font-bold flex items-center"><Sparkles className="mr-2" /> AI 学术导师建议</h3><button onClick={() => setShowAiModal(false)} className="text-white/80 hover:text-white"><XCircle size={24} /></button></div>
+              <div className="p-6 overflow-y-auto flex-1">{isAiLoading ? (<div className="flex flex-col items-center justify-center py-12"><Loader2 className="w-12 h-12 text-purple-600 animate-spin" /><p>AI 正在分析...</p></div>) : (<div className="prose prose-purple max-w-none text-gray-700">{aiRecommendation.split('\n').map((line, i) => <p key={i}>{line.replace(/\*\*/g, '')}</p>)}</div>)}</div>
             </div>
           </div>
         )}
