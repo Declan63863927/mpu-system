@@ -23,8 +23,9 @@ We adopted the **Agile Development** model to manage this project.
 ### ✨ Key Features
 * ✅ **Intelligent Registration**: Real-time course validation, capacity checking, and conflict resolution.
 * ✅ **Dynamic Dashboard**: Auto-calculation of student GPAs and acquired credits based on historical records.
+* ✅ **Visual Timetable (New!)**: An interactive weekly schedule view that automatically maps and organizes enrolled courses into a responsive grid.
+* ✅ **Detailed Course Syllabus**: Interactive modal windows providing in-depth course descriptions, prerequisites, and instructor details.
 * ✅ **Secure Access**: Route protection and identity verification via a dedicated Authentication Module.
-* ✅ **Modern UI**: Responsive design built with Tailwind CSS for high usability.
 
 ### 🧠 Core Algorithm
 The system utilizes a **Rule-Based Validation Algorithm**. It aggregates structured data—including maximum credit limits, historical grades, and real-time course capacity—to strictly enforce academic policies (e.g., intercepting over-credit enrollment and full-class registrations) through synchronous logical reasoning.
@@ -38,6 +39,7 @@ The system utilizes a **Rule-Based Validation Algorithm**. It aggregates structu
 * **Sprint 2**: Development of core business logic (registration validation, credit logic).
 * **Sprint 3**: Comprehensive functional testing and UI refinement.
 * **Sprint 4**: Implementation of the secure Authentication Module and route protection.
+* **Sprint 5**: Developed the visual Timetable Grid and detailed Syllabus Modals to enhance UI/UX completeness.
 
 ### 👥 Members & Roles
 | Name | Student ID | Roles & Responsibilities | Contribution |
@@ -46,7 +48,7 @@ The system utilizes a **Rule-Based Validation Algorithm**. It aggregates structu
 | **Sun Donghao** | p2421132 | Back-end Developer, Database Administration | 35% |
 | **Xu Zhengchi** | p2421336 | Front-end Developer, UI Design | 10% |
 | **Wang Jingqi** | p2421584 | Back-end Developer, Database Administration | 10% |
-| **Zhang Junwei** | p2421135 | Front-end Developer, UI Design | 10% |
+| **Zhang Junwei** | p2214320 | Front-end Developer, UI Design | 10% |
 
 ### 🕒 Milestones
 * **April 14, 2026**: Environment setup and foundational framework.
